@@ -14,10 +14,17 @@ var SongEntry = React.createClass({
     this.firebaseRef.on('child_added', function(snapshot) {
       var eachSong = snapshot.val()
       var eachTitle = eachSong.title;
+      var artist;
+      var song;
       // The next three lines attempt to parse the song title to store
-      var separateTitleandArtist = eachTitle.indexOf('-')
-      var artist = eachTitle.slice(0, separateTitleandArtist)
-      var song = eachTitle.slice(separateTitleandArtist + 2, eachTitle.length)
+      var separateTitleandArtist = eachTitle.indexOf('-');
+      if (separateTitleandArtist === -1){
+        song = eachTitle.slice(0, eachTitle.lenth);
+        artist = '';
+      } else {
+          artist = eachTitle.slice(0, separateTitleandArtist);
+          song = eachTitle.slice(separateTitleandArtist + 2, eachTitle.length);
+        }
       // Pushes each song into the items array for rendering
       this.items.push({
         artist: artist,
